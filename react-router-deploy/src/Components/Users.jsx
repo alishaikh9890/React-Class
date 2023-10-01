@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 
 import styled from "styled-components";
+import Connection from "../assets/connection.gif"
 
 const UserDiv = styled.div`
   & table {
@@ -39,12 +40,15 @@ const UserDiv = styled.div`
 
 const Users = () => {
   const [users, setUsers] = React.useState([]);
+  const [loading, setLoading] = React.useState(true)
+  const [error , setError] = React.useState(false)
 
   React.useEffect(() => {
-    fetch(process.env.REACT_APP_BASE_URL + "/users")
+    fetch(`https://fakestoreapi.com/users`)
       .then((res) => res.json())
       .then((res) => setUsers(res))
-      
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false))
   }, []);
 
   const isAuth = true;
@@ -56,7 +60,12 @@ const Users = () => {
   return (
     <UserDiv>
       <h2>USERS LISTING PAGE</h2>
-
+      {loading ? (
+        <img src={Connection} alt="" />
+      ) : error ? (
+        <h1>somthing went wrong</h1>
+      ) : (
+    
       <table>
         <thead>
           <tr>
@@ -80,6 +89,7 @@ const Users = () => {
           ))}
         </tbody>
       </table>
+      )}
     </UserDiv>
   );
 };

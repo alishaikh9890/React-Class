@@ -1,5 +1,6 @@
 {
   "name": "react-router-deploy",
+  "homepage":"https://askdigitalsolution.com/react-router",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

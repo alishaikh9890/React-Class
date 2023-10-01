@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import Cart from "../assets/shopping-cart.gif"
+
 const Product = styled.div`
   & table td {
   }
@@ -14,19 +16,27 @@ const Product = styled.div`
 
 const Products = () => {
   const [products, setProducts] = React.useState([]);
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(false);
+
 
   React.useEffect(() => {
-    fetch(`http://localhost:3004/products`)
+
+    fetch(`https://fakestoreapi.com/products`)
       .then((res) => res.json())
       .then((res) => setProducts(res))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false))
-  });
+  }, [])
 
   return (
     <Product>
-      {
+    {loading ? (
+      <img src={Cart} alt="" />
+    ) : error ? (
+      <h1>something went wrong</h1>
+    ) : (
+
         <table>
           <thead>
             <tr>
@@ -36,18 +46,16 @@ const Products = () => {
             </tr>
           </thead>
           <tbody>
-            {products?.map((product) => (
+            {products.map((product) => (
               <tr key={product.id}>
                 <td>{product.title}</td>
-                <td>{product.price} INR</td>
-                <td>
-                  <Link to={`/products/${product.id}`}>More...</Link>
-                </td>
+                <td>{product.price}  INR</td>
+                <td><Link to={`/products/${product.id}`}>More...</Link></td>
               </tr>
             ))}
           </tbody>
         </table>
-      }
+        )}
     </Product>
   )
 }

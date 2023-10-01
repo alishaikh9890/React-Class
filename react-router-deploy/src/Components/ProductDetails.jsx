@@ -2,6 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
+import Basket from "../assets/shopping-basket.gif"
+
 const Cart = styled.div`
   width: 200vh;
   display: flex;
@@ -56,7 +58,7 @@ const ProductDetails = () => {
   console.log(productDetails);
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <img src={Basket} alt="" />;
   } else if (error) {
     return <h1>something went wrong</h1>;
   } else {
